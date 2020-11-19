@@ -1,0 +1,19 @@
+{% extends 'landing_page.html' %}
+{% load static %}
+
+{% block container %}
+    <div class="container">
+        <h1 class="text-center">Edit pet photo</h1>
+        <div class="row">
+            <div class="col-lg-3"></div>
+            <div class="col-lg-6">
+                <form method="post" class="furniture-form" action="{% url 'pets_edit' pet.pk %}">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button class="btn btn-primary mt-2" type="submit">Edit</button>
+                </form>
+            </div>
+            <div class="col-lg-3"></div>
+        </div>
+    </div>
+{% endblock container %}
