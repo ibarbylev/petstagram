@@ -21,6 +21,7 @@ def pet_create(request):
         context = {'form': PetForm()}
         return render(request, 'pets/pet_create.html', context)
 
+
 def pet_delete(request, pk):
     pet = Pet.objects.get(pk=pk)
     if request.method == 'GET':
