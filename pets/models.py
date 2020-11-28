@@ -12,7 +12,7 @@ class Pet(models.Model):
     name = models.CharField(max_length=6, blank=False)
     age = models.IntegerField(blank=False)
     description = models.TextField(blank=False)
-    image_url = models.ImageField(upload_to='images')
+    image = models.ImageField(upload_to='images')
 
     def __str__(self):
         return f'{self.id}, {self.type}, {self.name}'

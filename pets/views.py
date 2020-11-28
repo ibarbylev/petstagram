@@ -13,7 +13,7 @@ def list_pets(request):
 
 def pet_create(request):
     if request.method == 'POST':
-        pet = PetForm(request.POST)
+        pet = PetForm(request.POST, request.FILES)
         if pet.is_valid():
             pet.save()
         return redirect('list pets')
@@ -35,7 +35,7 @@ def pet_delete(request, pk):
 def pets_edit(request, pk):
     pet = Pet.objects.get(pk=pk)
     if request.method == 'POST':
-        pet = PetForm(request.POST, instance=pet)
+        pet = PetForm(request.POST, request.FILES, instance=pet)
         if pet.is_valid():
             pet.save()
             pet = Pet.objects.get(pk=pk)
