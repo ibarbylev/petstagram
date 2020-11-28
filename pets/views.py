@@ -1,3 +1,5 @@
+import os
+
 from django.shortcuts import render, redirect
 
 from common.forms import CommentForm
@@ -35,10 +37,11 @@ def pet_delete(request, pk):
 def pets_edit(request, pk):
     pet = Pet.objects.get(pk=pk)
     if request.method == 'POST':
+        old_image = pet.image
         pet = PetForm(request.POST, request.FILES, instance=pet)
         if pet.is_valid():
+            os.remove(old_image.path)  # !!! delete old image before saving the new one
             pet.save()
-            pet = Pet.objects.get(pk=pk)
         return redirect('pet details', pk)
     else:
         context = {"pet": pet, 'form': PetForm(instance=pet)}
