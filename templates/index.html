@@ -1,4 +1,4 @@
-{% extends 'landing_page.html' %}
+{% extends 'base_page.html' %}
 {% load static %}
 
 {% block container %}
@@ -17,7 +17,7 @@
                  </div>
                  <div class="col-lg-6">
                     <p class="lead"> Do not have an account? <br>
-                       <a href="#" class="btn btn-lg btn-secondary">sign up</a>
+                       <a href="{% url 'signup_user' %}" class="btn btn-lg btn-secondary">sign up</a>
                     </p>
                  </div>
               </div>

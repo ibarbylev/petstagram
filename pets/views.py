@@ -40,8 +40,11 @@ def pets_edit(request, pk):
         old_image = pet.image
         pet = PetForm(request.POST, request.FILES, instance=pet)
         if pet.is_valid():
-            os.remove(old_image.path)  # !!! delete old image before saving the new one
+            if old_image:
+                os.remove(old_image.path)  # !!! delete old image before saving the new one
             pet.save()
+            # # if we want to delete likes of this editable object
+            # Like.objects.filter(pet_id=pet.id).delete()
         return redirect('pet details', pk)
     else:
         context = {"pet": pet, 'form': PetForm(instance=pet)}
