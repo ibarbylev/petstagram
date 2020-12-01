@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Pet, Like
+from pets.models import Like, Pet
 
 
 class LikeInlineAdmin(admin.TabularInline):

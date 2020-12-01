@@ -1,5 +1,7 @@
 from django.db import models
 
+from accounts.models import UserProfile
+
 
 class Pet(models.Model):
     PET_TYPES = (
@@ -14,6 +16,8 @@ class Pet(models.Model):
     description = models.TextField(blank=False)
     image = models.ImageField(upload_to='images')
 
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+
     def __str__(self):
         return f'{self.id}, {self.type}, {self.name}'
 
@@ -24,3 +28,7 @@ class Pet(models.Model):
 class Like(models.Model):
     pet = models.ForeignKey(Pet, on_delete=models.CASCADE)
     test = models.CharField(max_length=2, blank=True)
+
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+
+
