@@ -1,10 +1,12 @@
+from django.contrib.auth import login
 from django.shortcuts import render, redirect
 
 from accounts.forms import SignUpForm
+from accounts.models import UserProfile
 
 
-def user_profile(request, pk):
-    pass
+def user_profile(request, pk=None):
+    return redirect('index')
 
 
 def signup_user(request):
@@ -14,7 +16,10 @@ def signup_user(request):
     else:
         form = SignUpForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            profile = UserProfile(user=user)
+            profile.save()
+            login(request, user)
             return redirect('index')
         context = {'form': form}
         return render(request, 'accounts/signup.html', context)
