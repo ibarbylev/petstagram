@@ -1,4 +1,4 @@
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.shortcuts import render, redirect
 
 from accounts.forms import SignUpForm
@@ -24,3 +24,7 @@ def signup_user(request):
         context = {'form': form}
         return render(request, 'accounts/signup.html', context)
 
+
+def signout_user(request):
+    logout(request)
+    return redirect('index')
