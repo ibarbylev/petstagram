@@ -1,5 +1,6 @@
 import os
 
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
 from common.forms import CommentForm
@@ -13,6 +14,7 @@ def list_pets(request):
     return render(request, 'pets/pet_list.html', context)
 
 
+@login_required
 def pet_create(request):
     if request.method == 'POST':
         pet = PetForm(request.POST, request.FILES)
@@ -24,6 +26,7 @@ def pet_create(request):
         return render(request, 'pets/pet_create.html', context)
 
 
+@login_required
 def pet_delete(request, pk):
     pet = Pet.objects.get(pk=pk)
     if request.method == 'GET':
@@ -34,6 +37,7 @@ def pet_delete(request, pk):
         return redirect('list pets')
 
 
+@login_required
 def pets_edit(request, pk):
     pet = Pet.objects.get(pk=pk)
     if request.method == 'POST':
@@ -51,6 +55,7 @@ def pets_edit(request, pk):
         return render(request, 'pets/pet_edit.html', context)
 
 
+@login_required
 def pets_like(request, pk):
     like = Like.objects.filter(user_id=request.user.userprofile, pet_id=pk).first()
     if like:
@@ -63,6 +68,7 @@ def pets_like(request, pk):
     return redirect('pet details', pk)
 
 
+@login_required
 def show_pets_details_and_commits(request, pk):
     pet = Pet.objects.get(pk=pk)
     context = {
@@ -80,5 +86,3 @@ def show_pets_details_and_commits(request, pk):
             context = {"pet": pet, "comment": CommentForm()}
 
     return render(request, 'pets/pet_detail.html', context)
-
-
