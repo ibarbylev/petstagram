@@ -52,16 +52,25 @@ def pets_edit(request, pk):
 
 
 def pets_like(request, pk):
-    pet = Pet.objects.get(pk=pk)
-    like = Like(test=str(pk))
-    like.pet = pet
-    like.save()
-    return redirect('list pets')
+    like = Like.objects.filter(user_id=request.user.userprofile, pet_id=pk).first()
+    if like:
+        like.delete()
+    else:
+        pet = Pet.objects.get(pk=pk)
+        like = Like(test=str(pk), user=request.user.userprofile)
+        like.pet = pet
+        like.save()
+    return redirect('pet details', pk)
 
 
 def show_pets_details_and_commits(request, pk):
     pet = Pet.objects.get(pk=pk)
-    context = {"pet": pet, "comment": CommentForm()}
+    context = {
+        "pet": pet,
+        "comment": CommentForm(),
+        'is_owner': request.user == pet.user.user,
+        'has_liked': pet.like_set.filter(user_id=request.user.userprofile.id).exists(),
+    }
     if request.method == 'POST':
         comment = CommentForm(request.POST)
         if comment.is_valid():
