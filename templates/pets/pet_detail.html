@@ -34,9 +34,10 @@
          </div>
 
         <div class="d-block" style="background-color: #f1e3e3; padding:2%">
-            {% if pet.comment_set.count > 0 %}
+            {% if pet.comment_set.exists %}
                 {% for comment in pet.comment_set.all %}
                 <div class="box">
+                    <a href="{% url 'user_profile' comment.user_id %}">{{ pet.user.user.username }}</a>
                     <h5><em>{{ comment }}</em></h5>
                     <hr>
                 </div>
