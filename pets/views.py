@@ -3,6 +3,7 @@ import os
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
+from accounts.decorators import user_required
 from common.forms import CommentForm
 from common.models import Comment
 from pets.forms import PetForm
@@ -37,7 +38,7 @@ def pet_delete(request, pk):
         return redirect('list pets')
 
 
-@login_required
+@user_required
 def pets_edit(request, pk):
     pet = Pet.objects.get(pk=pk)
     if request.method == 'POST':
