@@ -75,7 +75,7 @@ def show_pets_details_and_commits(request, pk):
         comment = CommentForm(request.POST)
         if comment.is_valid():
             comment = comment.clean()['comment']
-            com = Comment(pet=pet, comment=comment)
+            com = Comment(pet=pet, comment=comment, user=request.user.userprofile)
             com.save()
             context = {"pet": pet, "comment": CommentForm()}
 
